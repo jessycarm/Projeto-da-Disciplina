@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+
+typedef struct cadastro {
+    int matricula;
+    float parcial;
+    float global;
+
+    struct cadastro *proximo;
+
+} dados;
+
+void detalhe();
+void apresenta();
+void executa();
+
+int main(void) {
+    int opc;
+
+    detalhe();
+    apresenta();
+    detalhe();
+
+    dados * ini_dados;
+    dados * proximo_dados;
+
+    
+
+    ini_dados = (dados *) malloc(sizeof (dados));
+    if (ini_dados == NULL)
+        exit(1);
+    proximo_dados = ini_dados;
+
+    while (1) {
+      executa();
+      scanf("%d", &opc);
+
+      detalhe();
+
+      if(opc == 1){
+
+        printf("\nInforme a matricula do Aluno:\n -->");
+        scanf("%d", &proximo_dados -> matricula);
+        printf("\nDigite a nota da avaliação PARCIAL do Aluno:\n -->");
+        scanf("%f", &proximo_dados -> parcial);
+        printf("\nDigite a nota da avaliação GLOBAL do Aluno:\n -->");
+        scanf("%f", &proximo_dados -> global);
+        
+         proximo_dados-> proximo = (dados *) malloc(sizeof (dados));
+        proximo_dados = proximo_dados->proximo;
+
+        detalhe();
+
+        }else if(opc == 2){ 
+
+      proximo_dados->proximo = NULL;
+      proximo_dados = ini_dados;
+    
+      printf("Dados dos Alunos Cadastrados:\n");
+      detalhe();
+
+      while (proximo_dados != NULL) {
+        printf("Matricula: %d\n", proximo_dados->matricula);
+        printf("Nota da Avaliação PARCIAL: %.2f\n", proximo_dados->parcial);
+        printf("Nota da Avaliação GLOBAL: %.2f\n", proximo_dados->global);
+        printf("\n"); 
+        proximo_dados = proximo_dados->proximo;
+
+        detalhe();       
+
+      }     
+    }else{
+      printf("Opção inválida.\n");
+      printf("Até logo.\n");
+      break;
+    }     
+  }
+
+  return 0;
+}
+
+void detalhe() {
+    int i;
+    for (i = 0; i < 50; i++) {
+        printf("%s", "~");
+    }
+    printf("\n");
+}
+
+void apresenta() {
+    printf("  Escola de Ensino Médio Pingo");
+    printf("\n");
+    detalhe();
+    
+    printf("Bem Vindo ao Sistema de Cadastro de Aluno.\n");
+}
+
+void executa(){
+  printf("1- Cadastrar aluno.\n");
+  printf("2-Vizualizar alunos cadastrados.\n");
+  printf("Informe a opção escolhida:\n-->");
+}
+
+
+
